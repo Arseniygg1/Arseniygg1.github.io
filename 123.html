@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простая страница</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            background: #007BFF;
+            color: white; /* Изменил цвет на белый */
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Плавное изменение цвета */
+        }
+        button:hover {
+            background-color: #0056b3; /* Более темный синий при наведении */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Привет, я Иван Арбузов</h1>
+        <p>Если нажмешь, кое-что узнаешь ;)</p>
+        <button id="myButton" onclick="showMessage()">Нажми меня!</button>
+    </div>
+
+    <script>
+        const messages = [
+            "ВЫ ЖЕСТКО ШЛЁПНУЛИ ИВАНА АРБУЗОВА ПО ПОПКЕ!",
+            "Иван Арбузов в шоке от вашей наглости!",
+            "Больше не трогайте Ивана Арбузова!",
+            "Иван Арбузов вызывает полицию!",
+            "Шлёп-шлёп! Это было больно...",
+            "Иван Арбузов подаёт на вас в суд!",
+            "Иван Арбузов спрятал все арбузы!",
+            "У Ивана Арбузова лопнул арбуз!",
+            "Иван Арбузов обиделся!",
+            "Иван Арбузов решил уйти в монастырь."
+        ];
+
+        const button = document.getElementById("myButton");
+        let clickCount = 0; // Счетчик нажатий
+        const originalText = button.textContent;
+
+        function showMessage() {
+            button.disabled = true; // Отключаем кнопку на время задержки
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * messages.length);
+                alert(messages[randomIndex]);
+                button.disabled = false; // Включаем кнопку обратно
+                clickCount++; // Увеличиваем счетчик нажатий
+
+                // Меняем текст кнопки после первого нажатия
+                if (clickCount === 1) {
+                    button.textContent = "Хватит!";
+                }
+                // Альтернативный вариант - кнопка исчезает
+                if (clickCount >= 3) {
+                    button.style.display = "none";
+                }
+
+            }, 500); // Задержка в 0.5 секунды (500 миллисекунд)
+        }
+    </script>
+</body>
+</html>
