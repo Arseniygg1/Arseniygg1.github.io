@@ -3,35 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Простая страница</title>
+    <title>Приключения с Иваном Арбузовым</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff9966, #ff5e62); /* Красивый градиент */
+            color: #333; /* Более читаемый цвет текста */
+            margin: 0; /* Убираем стандартные отступы */
         }
+
         .container {
             text-align: center;
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px; /* Больше отступов */
+            border-radius: 15px; /* Более скругленные края */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Более выразительная тень */
+            transition: transform 0.3s ease; /* Анимация при наведении */
+            max-width: 500px; /* Ограничиваем ширину контейнера */
+            width: 90%; /* Занимаем 90% экрана на маленьких устройствах */
         }
+
+        .container:hover {
+            transform: translateY(-5px); /* Поднимаем контейнер при наведении */
+        }
+
+        h1 {
+            font-size: 2.5em; /* Увеличиваем размер заголовка */
+            margin-bottom: 10px;
+            color: #e44d26; /* Акцентный цвет для заголовка */
+        }
+
+        p {
+            font-size: 1.2em; /* Увеличиваем размер параграфа */
+            margin-bottom: 20px;
+        }
+
         button {
-            padding: 10px 20px;
-            margin-top: 10px;
+            padding: 12px 25px; /* Больше отступов в кнопке */
+            margin-top: 15px; /* Больше отступ сверху */
             border: none;
-            background: #007BFF;
-            color: white; /* Изменил цвет на белый */
-            border-radius: 5px;
+            background: #e44d26; /* Яркий цвет для кнопки */
+            color: white;
+            border-radius: 8px; /* Скругленные края */
             cursor: pointer;
-            transition: background-color 0.3s ease; /* Плавное изменение цвета */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Плавное изменение цвета и анимация */
+            font-size: 1.1em; /* Увеличиваем размер текста */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Небольшая тень */
         }
+
         button:hover {
-            background-color: #0056b3; /* Более темный синий при наведении */
+            background-color: #c0392b; /* Более темный цвет при наведении */
+            transform: scale(1.05); /* Небольшое увеличение при наведении */
+        }
+
+        button:disabled {
+            background-color: #ccc; /* Серый цвет для отключенной кнопки */
+            cursor: not-allowed; /* Меняем курсор */
+            transform: scale(1); /* Убираем увеличение */
+        }
+
+        /* Стили для сообщения */
+        #message {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: none; /* Скрываем сообщение по умолчанию */
         }
     </style>
 </head>
@@ -40,6 +82,7 @@
         <h1>Привет, я Иван Арбузов</h1>
         <p>Если нажмешь, кое-что узнаешь ;)</p>
         <button id="myButton" onclick="showMessage()">Нажми меня!</button>
+        <div id="message"></div>
     </div>
 
     <script>
@@ -57,27 +100,37 @@
         ];
 
         const button = document.getElementById("myButton");
-        let clickCount = 0; // Счетчик нажатий
+        const messageDiv = document.getElementById("message"); // Получаем элемент для сообщения
+        let clickCount = 0;
         const originalText = button.textContent;
 
         function showMessage() {
-            button.disabled = true; // Отключаем кнопку на время задержки
-            setTimeout(() => {
-                const randomIndex = Math.floor(Math.random() * messages.length);
-                alert(messages[randomIndex]);
-                button.disabled = false; // Включаем кнопку обратно
-                clickCount++; // Увеличиваем счетчик нажатий
+            button.disabled = true;
+            button.classList.add("disabled"); // Добавляем класс для стилей отключенной кнопки
 
-                // Меняем текст кнопки после первого нажатия
+            // Случайное сообщение
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            const message = messages[randomIndex];
+
+            // Выводим сообщение в div, а не alert
+            messageDiv.textContent = message;
+            messageDiv.style.display = "block";
+
+            setTimeout(() => {
+                messageDiv.style.display = "none"; // Скрываем сообщение
+                button.disabled = false;
+                button.classList.remove("disabled"); // Убираем класс
+                clickCount++;
+
                 if (clickCount === 1) {
                     button.textContent = "Хватит!";
                 }
-                // Альтернативный вариант - кнопка исчезает
+
                 if (clickCount >= 3) {
                     button.style.display = "none";
                 }
+            }, 1500); // Увеличиваем время показа сообщения
 
-            }, 500); // Задержка в 0.5 секунды (500 миллисекунд)
         }
     </script>
 </body>
